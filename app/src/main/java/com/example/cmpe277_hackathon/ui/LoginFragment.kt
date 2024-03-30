@@ -8,6 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.cmpe277_hackathon.databinding.FragmentLoginBinding
 
+
+object SharedLoginRepository {
+    var isResearcher: Boolean? = null
+}
+
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null

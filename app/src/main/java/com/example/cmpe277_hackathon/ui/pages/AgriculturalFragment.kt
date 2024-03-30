@@ -22,6 +22,7 @@ import com.example.cmpe277_hackathon.annotationrecord.AnnotationRecord
 import com.example.cmpe277_hackathon.R
 import com.example.cmpe277_hackathon.annotationrecord.AnnotationDbHelper
 import com.example.cmpe277_hackathon.ui.CustomSpinnerAdapter
+import com.example.cmpe277_hackathon.ui.SharedLoginRepository
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -313,7 +314,7 @@ class AgriculturalFragment : Fragment(), OnChartValueSelectedListener, OnChartGe
                     if (isChecked){
                         selectingIndicators.add(indicatorEntry.key)
                     }else{
-                        selectingIndicators.remove(indicatorEntry.key)
+                        selectingIndicators.removeAll(listOf(indicatorEntry.key))
                     }
                     fetchData(selectingCountry, selectingIndicators, selectingYearStart, selectingYearEnd)
                 }
@@ -323,6 +324,9 @@ class AgriculturalFragment : Fragment(), OnChartValueSelectedListener, OnChartGe
         }
 
         databaseLoad()
+
+        Log.d("main", "Login: isResearcher = ${SharedLoginRepository.isResearcher}")
+        if(SharedLoginRepository.isResearcher == false) binding.cardAnnotations.visibility = View.GONE
 
         return root
     }
@@ -343,7 +347,7 @@ class AgriculturalFragment : Fragment(), OnChartValueSelectedListener, OnChartGe
             setTextColor(indicatorColorList[IndicatorChoices.values.indexOf(indicatorDisplay)])
             text = "${dataEntry.x.toInt()} $indicatorDisplay: ${DecimalFormat("#,##0.00").format(dataEntry.y)}"
         }
-        binding.buttonAnnotation.visibility = View.VISIBLE
+        if(SharedLoginRepository.isResearcher == true) binding.buttonAnnotation.visibility = View.VISIBLE
         editingAnnotation = AnnotationRecord(country = selectingCountry, year = dataEntry.x.toInt().toString(), indicator = indicatorCode, content = "")
     }
 

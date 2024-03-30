@@ -4,6 +4,7 @@ import AnnotationTableRowView
 import OnTextDialogListener
 import TextDialogFragment
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -21,6 +22,8 @@ import androidx.fragment.app.Fragment
 import com.example.cmpe277_hackathon.annotationrecord.AnnotationRecord
 import com.example.cmpe277_hackathon.R
 import com.example.cmpe277_hackathon.ui.CustomSpinnerAdapter
+import com.example.cmpe277_hackathon.ui.LoginFragment
+import com.example.cmpe277_hackathon.ui.SharedLoginRepository
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -311,7 +314,7 @@ class EconomicFragment : Fragment(), OnChartValueSelectedListener, OnChartGestur
                     if (isChecked){
                         selectingIndicators.add(indicatorEntry.key)
                     }else{
-                        selectingIndicators.remove(indicatorEntry.key)
+                        selectingIndicators.removeAll(listOf(indicatorEntry.key))
                     }
                     fetchData(selectingCountry, selectingIndicators, selectingYearStart, selectingYearEnd)
                 }
@@ -321,6 +324,14 @@ class EconomicFragment : Fragment(), OnChartValueSelectedListener, OnChartGestur
         }
 
         databaseLoad()
+
+//        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+//        transaction.replace(R.id.navigation_economic, LoginFragment())
+//        transaction.commit()
+
+        if(SharedLoginRepository.isResearcher == null) showLoginDialog()
+        Log.d("main", "Login: isResearcher = ${SharedLoginRepository.isResearcher}")
+        if(SharedLoginRepository.isResearcher == false) binding.cardAnnotations.visibility = View.GONE
 
         return root
     }
@@ -341,7 +352,7 @@ class EconomicFragment : Fragment(), OnChartValueSelectedListener, OnChartGestur
             setTextColor(indicatorColorList[IndicatorChoices.values.indexOf(indicatorDisplay)])
             text = "${dataEntry.x.toInt()} $indicatorDisplay: ${DecimalFormat("#,##0.00").format(dataEntry.y)}"
         }
-        binding.buttonAnnotation.visibility = View.VISIBLE
+        if(SharedLoginRepository.isResearcher == true) binding.buttonAnnotation.visibility = View.VISIBLE
         editingAnnotation = AnnotationRecord(country = selectingCountry, year = dataEntry.x.toInt().toString(), indicator = indicatorCode, content = "")
     }
 
@@ -359,6 +370,28 @@ class EconomicFragment : Fragment(), OnChartValueSelectedListener, OnChartGestur
         databaseSave(annotation)
         databaseLoad()
     }
+
+    private fun showLoginDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle("Welcome to Macroeconomic Food Security App")
+        builder.setMessage("Please identify yourself?")
+
+        builder.setNegativeButton("Government") { _, _ ->
+            SharedLoginRepository.isResearcher = false
+            Log.d("main", "Login: isResearcher = ${SharedLoginRepository.isResearcher}")
+            if(SharedLoginRepository.isResearcher == false) binding.cardAnnotations.visibility = View.GONE
+        }
+        builder.setPositiveButton("Researcher") { _, _ ->
+            SharedLoginRepository.isResearcher = true
+            Log.d("main", "Login: isResearcher = ${SharedLoginRepository.isResearcher}")
+            if(SharedLoginRepository.isResearcher == false) binding.cardAnnotations.visibility = View.GONE
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
     override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
     override fun onChartGestureEnd(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
