@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_economic">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.cmpe277_hackathon.ui.home.HomeFragment"
+        android:id="@+id/navigation_economic"
+        android:name="com.example.cmpe277_hackathon.ui.pages.EconomicFragment"
         android:label="@string/title_economic"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_economic" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.cmpe277_hackathon.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_agricultural"
+        android:name="com.example.cmpe277_hackathon.ui.pages.AgriculturalFragment"
+        android:label="@string/title_agricultural"
+        tools:layout="@layout/fragment_agricultural" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.cmpe277_hackathon.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_debt"
+        android:name="com.example.cmpe277_hackathon.ui.pages.DebtFragment"
+        android:label="@string/title_debt"
+        tools:layout="@layout/fragment_debt" />
+
+    <fragment
+        android:id="@+id/navigation_chatgpt"
+        android:name="com.example.cmpe277_hackathon.ui.pages.ChatgptFragment"
+        android:label="@string/title_chatgpt"
+        tools:layout="@layout/fragment_chatgpt" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.cmpe277_hackathon.ui.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

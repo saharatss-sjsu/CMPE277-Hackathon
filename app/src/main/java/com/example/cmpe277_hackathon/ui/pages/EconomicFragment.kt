@@ -1,4 +1,4 @@
-package com.example.cmpe277_hackathon.ui.home
+package com.example.cmpe277_hackathon.ui.pages
 
 import AnnotationTableRowView
 import OnTextDialogListener
@@ -18,11 +18,9 @@ import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.cmpe277_hackathon.annotationrecord.AnnotationEconomicDbHelper
 import com.example.cmpe277_hackathon.annotationrecord.AnnotationRecord
 import com.example.cmpe277_hackathon.R
-import com.example.cmpe277_hackathon.databinding.FragmentHomeBinding
+import com.example.cmpe277_hackathon.ui.CustomSpinnerAdapter
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -44,6 +42,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.text.DecimalFormat
 import kotlin.random.Random
+
+import com.example.cmpe277_hackathon.annotationrecord.AnnotationDbHelper as AnnotationDbHelper
+import com.example.cmpe277_hackathon.databinding.FragmentEconomicBinding as FragmentBinding
 
 private fun randomColor(): Int {
     val random = Random.Default
@@ -75,22 +76,10 @@ private val IndicatorChoices: Map<String, String> = mapOf(
     "BX.KLT.DINV.WD.GD.ZS" to "FDI, net inflows (% of GDP)",
     "BM.KLT.DINV.WD.GD.ZS" to "FDI, net outflows (% of GDP)",
 )
-class CustomSpinnerAdapter(context: Context, resource: Int, objects: List<String>, private val keys: List<String>) : ArrayAdapter<String>(context, resource, objects) {
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = super.getView(position, convertView, parent)
-        view.tag = keys[position]
-        return view
-    }
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = super.getDropDownView(position, convertView, parent)
-        view.tag = keys[position]
-        return view
-    }
-}
 
-class HomeFragment : Fragment(), OnChartValueSelectedListener, OnChartGestureListener, OnTextDialogListener {
+class EconomicFragment : Fragment(), OnChartValueSelectedListener, OnChartGestureListener, OnTextDialogListener {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -196,8 +185,8 @@ class HomeFragment : Fragment(), OnChartValueSelectedListener, OnChartGestureLis
 
     private fun databaseLoad() {
 //        requireContext().deleteDatabase("AnnotationDb.db")
-        val dbHelper = AnnotationEconomicDbHelper(requireContext())
-        annotations = dbHelper.readAllRecords()
+        val dbHelper = AnnotationDbHelper(requireContext())
+        annotations = dbHelper.readAllRecords().filter { annotationRecord -> IndicatorChoices.containsKey(annotationRecord.indicator) }.toMutableList()
         Log.d("main", "SQLite read: $annotations")
         val tableAnnotation = binding.tableAnnotations
         tableAnnotation.removeAllViews()
@@ -219,7 +208,7 @@ class HomeFragment : Fragment(), OnChartValueSelectedListener, OnChartGestureLis
         }
     }
     private fun databaseSave(annotationRecord: AnnotationRecord) {
-        AnnotationEconomicDbHelper(requireContext()).writeRecord(annotationRecord)
+        AnnotationDbHelper(requireContext()).writeRecord(annotationRecord)
     }
 
     @SuppressLint("SetTextI18n")
@@ -228,9 +217,8 @@ class HomeFragment : Fragment(), OnChartValueSelectedListener, OnChartGestureLis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         indicatorColorList = mutableListOf<Int>().apply { repeat(20) { add(randomColor()) }}
@@ -262,7 +250,7 @@ class HomeFragment : Fragment(), OnChartValueSelectedListener, OnChartGestureLis
             visibility = View.GONE
             setOnClickListener {
                 val dialogFragment = TextDialogFragment("Annotation")
-                dialogFragment.textDialogListener = this@HomeFragment
+                dialogFragment.textDialogListener = this@EconomicFragment
                 dialogFragment.show(childFragmentManager, "annotation_dialog")
             }
         }

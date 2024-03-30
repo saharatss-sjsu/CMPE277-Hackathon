@@ -2,18 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:id="@+id/navigation_economic"
+        android:icon="@drawable/ic_page_economic"
         android:title="@string/title_economic" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_agricultural"
+        android:icon="@drawable/ic_page_agricultural"
+        android:title="@string/title_agricultural" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_debt"
+        android:icon="@drawable/ic_page_debt"
+        android:title="@string/title_debt" />
+
+    <item
+        android:id="@+id/navigation_chatgpt"
+        android:icon="@drawable/ic_page_openai"
+        android:title="@string/title_chatgpt" />
 
 </menu>
