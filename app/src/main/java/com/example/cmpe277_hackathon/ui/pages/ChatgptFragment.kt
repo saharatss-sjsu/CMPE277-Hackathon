@@ -50,12 +50,15 @@ class ChatgptFragment : Fragment() {
     ): View {
         _binding = FragmentChatgptBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val context = requireContext()
 
         val textInput = binding.textInput
 
-        val context = requireContext()
+        val progressBar = binding.progressBar
+        progressBar.visibility = View.GONE
 
-        binding.buttonSend.apply {
+        val sendButton = binding.buttonSend
+        sendButton.apply {
             setOnClickListener {
                 val message = textInput.text.toString()
                 textInput.setText("")
@@ -67,6 +70,10 @@ class ChatgptFragment : Fragment() {
 
                 val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
                 inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
+
+                sendButton.visibility  = View.GONE
+                textInput.visibility   = View.GONE
+                progressBar.visibility = View.VISIBLE
             }
         }
 
@@ -102,6 +109,10 @@ class ChatgptFragment : Fragment() {
             Log.d("main", "OpenAI: response = $message")
             messages.add("AI: $message")
             updateListView()
+
+            binding.buttonSend.visibility  = View.VISIBLE
+            binding.textInput.visibility   = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
         }
     }
 }

@@ -102,6 +102,19 @@
             android:padding="24dp"
             android:translationY="-100dp">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/purple_500"
+                android:mirrorForRtl="false"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:visibility="visible" />
+
             <EditText
                 android:id="@+id/textInput"
                 android:layout_width="match_parent"
@@ -114,7 +127,8 @@
                 android:inputType="text"
                 android:lines="2"
                 android:textColorHighlight="@color/purple_500"
-                android:textColorLink="@color/purple_700" />
+                android:textColorLink="@color/purple_700"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/buttonSend"
