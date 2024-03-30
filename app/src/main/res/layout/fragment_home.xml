@@ -32,6 +32,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/lineChart"
                         android:layout_width="match_parent"
@@ -47,14 +48,55 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp">
 
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date" />
+
+                    <Spinner
+                        android:id="@+id/spinnerYearStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Spinner
+                        android:id="@+id/spinnerYearEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Country" />
 
                     <Spinner
                         android:id="@+id/spinnerCountry"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -70,37 +112,17 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="Indicators"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <LinearLayout
+                        android:id="@+id/indicators"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <CheckBox
-                            android:id="@+id/indicator1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="@color/purple_500"
-                            android:checked="true"
-                            android:tag="NY.GDP.MKTP.KD.ZG"
-                            android:text="GDP growth (annual %)" />
-
-                        <CheckBox
-                            android:id="@+id/indicator2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:buttonTint="@color/purple_500"
-                            android:tag="NY.GDP.MKTP.CD"
-                            android:text="GDP (current US$)" />
-
-                    </LinearLayout>
+                        android:orientation="vertical"/>
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
