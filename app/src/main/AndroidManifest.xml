@@ -24,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="com.example.cmpe277_app3.CallOpenAIService" />
+
     </application>
 
 </manifest>
