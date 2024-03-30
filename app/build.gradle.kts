@@ -53,12 +53,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-//    implementation("com.patrykandpatrick.vico:compose:2.0.0-alpha.13")
-//    implementation("com.patrykandpatrick.vico:compose-m2:2.0.0-alpha.13")
-//    implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.13")
-//    implementation("com.patrykandpatrick.vico:core:2.0.0-alpha.13")
-//    implementation("com.patrykandpatrick.vico:views:2.0.0-alpha.13")
-
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 
 }
